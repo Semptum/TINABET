@@ -3,15 +3,15 @@
 
 \setuplayout
     [
-  	cutspace=3mm,
+  	cutspace=0mm,
   	leftmargin=6mm,
   	leftmargindistance=2mm,
   	width=middle,
  	rightmargindistance=2mm,
-	rightmargin=2mm,
+	rightmargin=6mm,
 	backspace=8mm,
 	%
-	header=1mm,
+	header=20mm,
 	topspace=1mm,
 	height=middle,
 	headerdistance=1mm,
@@ -19,26 +19,37 @@
 ]
 
 
-
 \definefontfamily [presentation] [serif] [Garamond SC]
 \definefontfamily [presentation] [sans] [Diavlo] [default]
 \definefontfamily [presentation] [mono] [Roboto Light]
 \definefontfamily [presentation] [math] [Euler]
-
 \setupbodyfont[presentation,18pt]
 
-\setupheadertexts[]
 
-\define[2]\inheader{\setupheadertexts[#1#2]}
+\setupheadertexts [{%
+\bTABLE[frame=no,align=middle,offset=-0.15cm]
+\bTR \bTD \getmarking [slide] \eTD \eTR
+\bTR \bTD \tfx\getmarking [subtitle] \eTD \eTR
+\eTABLE
+}]
+\setupheader[text][style=\sc\ss\tfb]
 
-\definehead[slide][subject]
-\setuphead[slide][
-	alternative=middle, 
+\definemarking[subtitle]
+
+
+\definehead[slide] [subsection][
 	page=yes,
-	style=\tfb\sc\ss,
-	after={\blank[1cm]},
-	header=empty	
+	placehead=empty,
+	insidesection=\doSubtitle,	
 ]
 
-\showframe
+\starttexdefinition doSubtitle
+  \marking [subtitle] {\structureuservariable{subtitle}}
+\stoptexdefinition
+
+
+
+
+
+%\showframe
 \stopenvironment
