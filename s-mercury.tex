@@ -11,17 +11,17 @@
 	rightmargin=2mm,
 	backspace=8mm,
 	%
-	header=20mm,
+	header=1mm,
 	topspace=1mm,
 	height=middle,
 	headerdistance=1mm,
-	footerdistance=1mm
-    ]
+	footerdistance=1mm,
+]
 
 
 
 \definefontfamily [presentation] [serif] [Garamond SC]
-\definefontfamily [presentation] [sans] [Diavlo]
+\definefontfamily [presentation] [sans] [Diavlo] [default]
 \definefontfamily [presentation] [mono] [Roboto Light]
 \definefontfamily [presentation] [math] [Euler]
 
@@ -33,12 +33,12 @@
 
 \definehead[slide][subject]
 \setuphead[slide][
-	alternative=text,
+	alternative=middle, 
 	page=yes,
-	style=\tfb\sc,
-	command=\inheader,
+	style=\tfb\sc\ss,
+	after={\blank[1cm]},
+	header=empty	
 ]
-
 
 \showframe
 \stopenvironment
