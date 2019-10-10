@@ -52,7 +52,17 @@
 \definecolor[title] [h=1f98a4]
 \definecolor[subtitle] [h=65b583]
 
-\setupbackgrounds[page][background=color, backgroundcolor=background]
+
+\startreusableMPgraphic {page:background}
+StartPage;
+	draw (0,0) -- (1,1);
+	fill Page withcolor \MPcolor{background};
+StopPage;
+\stopreusableMPgraphic
+
+\defineoverlay [page:background][\reuseMPgraphic{page:background}]
+
+\setupbackgrounds[page][background={page:background}]
 
 
 \setupcolors[state=start,textcolor=foreground]
