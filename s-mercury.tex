@@ -19,41 +19,40 @@
 	footer=6mm
 ]
 
-
+% Setting up the fonts
 \definefontfamily [presentation] [serif] [Palatino]
-\definefontfamily [presentation] [sans] [Diavlo] [default]
+\definefontfamily [presentation] [sans] [Diavlo] 
 \definefontfamily [presentation] [mono] [Roboto Light]
 \definefontfamily [presentation] [math] [Euler]
 \setupbodyfont[presentation,18pt]
 
-\setupbodyfontenvironment[default][em=bold]
+\setupbodyfontenvironment[default][em=bold]  % Trying to make em colored but using the \color command doesn't work
 
+
+%The title of the slides. I couldn't figure out a way to make it centered and positionned correctly and be a two-liner. This is a temporary workaround I hope
 \setupheadertexts [{%
-\bTABLE[frame=no,align=middle,offset=0.05cm]
-\bTR \bTD \color[title]{\getmarking [slide]} \eTD \eTR
-\bTR \bTD \color[subtitle]{\tfx\getmarking [subtitle]} \eTD \eTR
-\eTABLE
+	\bTABLE[frame=no,align=middle,offset=0.05cm]
+		\bTR \bTD \color[title]{\getmarking [slide]} \eTD \eTR
+		\bTR \bTD \color[subtitle]{\tfx\getmarking [subtitle]} \eTD \eTR
+	\eTABLE
 }]
 \setupheader[text][style=\sc\ss\tfb]
 
-\setupfooter[text][style=\tt\tfxx]
-\setupfootertexts[\setups{footer:metadata}][\userpagenumber/\lastuserpage]
 
-\startsetups footer:metadata
-  \getvariable{metadata}{title} (\getvariable{metadata}{author})
+\setupfooter[text][style=\tt\tfxx]
+\setupfootertexts[\setups{metadata}][\userpagenumber/\lastuserpage]
+\startsetups metadata
+  \getvariable{metadata}{title}
 \stopsetups
 
 
-
-\definemarking[subtitle]
-
-
-\definehead[slide] [subsection][
+%Defining the slide
+\definehead[slide] [subject][
 	page=yes,
 	placehead=empty,
 	insidesection=\doSubtitle,
 ]
-
+\definemarking[subtitle]
 \starttexdefinition doSubtitle
   \marking [subtitle] {\structureuservariable{subtitle}}
 \stoptexdefinition
@@ -67,6 +66,7 @@
 \startuseMPgraphic {page:background}
 StartPage;
 	fill Page withcolor \MPcolor{background};
+	%Drawing the bottom lines
 	path a ;
 	a:=((0,0) -- for i=1cm step 1cm until PaperWidth-1cm : (i,uniformdeviate(0.7cm)) -- endfor  (PaperWidth,0)) shifted (0,1cm);
 	drawpath a withcolor \MPcolor{title} withpen pencircle scaled 0.3mm;
@@ -74,20 +74,20 @@ StartPage;
 	b:=((0,0) -- for i=1cm step 1cm until PaperWidth-1cm : (i,uniformdeviate(0.7cm)) -- endfor  (PaperWidth,0)) shifted (0,1cm);
 	drawpath b withcolor \MPcolor{subtitle} withpen pencircle scaled 0.3mm;
 	path c ;
-	c:=((0,0) -- for i=1cm step 1cm until PaperWidth/2-4cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth/2-3cm,-0.5cm) -- (PaperWidth/2+3cm,-0.5cm) -- for i=PaperWidth/2+4cm step 1cm until PaperWidth-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth,0)) shifted (0,PaperHeight-1cm);
+	%Drawing the top lines. The variable w should be the max of the widths of the title and subtitle. So basically the width of the natural table containing them
+	numeric w; w=6cm;
+	c:=((0,0) -- for i=1cm step 1cm until PaperWidth/2-w/2-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth/2-w/2,-0.5cm) -- (PaperWidth/2+w/2,-0.5cm) -- for i=PaperWidth/2+w/2+1cm step 1cm until PaperWidth-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth,0)) shifted (0,PaperHeight-1cm);
 	drawpath c withcolor \MPcolor{subtitle} withpen pencircle scaled 0.3mm;
 	path d ;
-	d:=((0,0) -- for i=1cm step 1cm until PaperWidth/2-4cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth/2-3cm,-0.5cm) -- (PaperWidth/2+3cm,-0.5cm) -- for i=PaperWidth/2  +4cm step 1cm until PaperWidth-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth,0)) shifted (0,PaperHeight-1cm);
+	d:=((0,0) -- for i=1cm step 1cm until PaperWidth/2-w/2-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth/2-w/2,-0.5cm) -- (PaperWidth/2+w/2,-0.5cm) -- for i=PaperWidth/2+w/2+1cm step 1cm until PaperWidth-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth,0)) shifted (0,PaperHeight-1cm);
 	drawpath d withcolor \MPcolor{title} withpen pencircle scaled 0.3mm;
 StopPage;
 \stopuseMPgraphic
 
 \defineoverlay [page:background][\reuseMPgraphic{page:background}]
-
 \setupbackgrounds[page][background={page:background}]
 
-
-\setupcolors[state=start,textcolor=foreground]
+\setupcolors[state=start,textcolor=foreground] % Setting text color to a light yellow
 
 \define[1]\em{\bf\color[title]{#1}}
 
