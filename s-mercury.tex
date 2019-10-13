@@ -30,7 +30,7 @@
 
 
 %The title of the slides. I couldn't figure out a way to make it centered and positionned correctly and be a two-liner. This is a temporary workaround I hope
-\setupheadertexts [{%
+\setupheadertexts [\hpos{titles}{%
 	\bTABLE[frame=no,align=middle,offset=0.05cm]
 		\bTR \bTD \color[title]{\getmarking [slide]} \eTD \eTR
 		\bTR \bTD \color[subtitle]{\tfx\getmarking [subtitle]} \eTD \eTR
@@ -63,8 +63,9 @@
 \definecolor[subtitle] [h=65b583]
 
 
-\startuseMPgraphic {page:background}
+\startMPpositiongraphic {drawings}
 StartPage;
+    numeric w; w=\MPw{\MPvar{self}} ;
 	fill Page withcolor \MPcolor{background};
 	%Drawing the bottom lines
 	path a ;
@@ -75,16 +76,19 @@ StartPage;
 	drawpath b withcolor \MPcolor{subtitle} withpen pencircle scaled 0.3mm;
 	path c ;
 	%Drawing the top lines. The variable w should be the max of the widths of the title and subtitle. So basically the width of the natural table containing them
-	numeric w; w=6cm;
 	c:=((0,0) -- for i=1cm step 1cm until PaperWidth/2-w/2-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth/2-w/2,-0.5cm) -- (PaperWidth/2+w/2,-0.5cm) -- for i=PaperWidth/2+w/2+1cm step 1cm until PaperWidth-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth,0)) shifted (0,PaperHeight-1cm);
 	drawpath c withcolor \MPcolor{subtitle} withpen pencircle scaled 0.3mm;
 	path d ;
 	d:=((0,0) -- for i=1cm step 1cm until PaperWidth/2-w/2-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth/2-w/2,-0.5cm) -- (PaperWidth/2+w/2,-0.5cm) -- for i=PaperWidth/2+w/2+1cm step 1cm until PaperWidth-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth,0)) shifted (0,PaperHeight-1cm);
 	drawpath d withcolor \MPcolor{title} withpen pencircle scaled 0.3mm;
 StopPage;
-\stopuseMPgraphic
+\stopMPpositiongraphic
 
-\defineoverlay [page:background][\reuseMPgraphic{page:background}]
+\startpositionoverlay{page:background}
+    \setMPpositiongraphic{titles}{drawings}{self=titles}
+\stoppositionoverlay
+
+\defineoverlay [page:background][\positionoverlay{page:background}]
 \setupbackgrounds[page][background={page:background}]
 
 \setupcolors[state=start,textcolor=foreground] % Setting text color to a light yellow
