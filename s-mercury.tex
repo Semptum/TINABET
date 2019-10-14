@@ -30,7 +30,7 @@
 
 
 %The title of the slides. I couldn't figure out a way to make it centered and positionned correctly and be a two-liner. This is a temporary workaround I hope
-\setupheadertexts [\hpos{titles}{%
+\setupheadertexts [\hpos{titles-\userpagenumber}{%
 	\bTABLE[frame=no,align=middle,offset=0.05cm]
 		\bTR \bTD \color[title]{\getmarking [slide]} \eTD \eTR
 		\bTR \bTD \color[subtitle]{\tfx\getmarking [subtitle]} \eTD \eTR
@@ -54,7 +54,10 @@
 ]
 \definemarking[subtitle]
 \starttexdefinition doSubtitle
-  \marking [subtitle] {\structureuservariable{subtitle}}
+	\marking [subtitle] {\structureuservariable{subtitle}}
+	\startpositionoverlay{page:background}
+		\setMPpositiongraphic{titles-\userpagenumber}{drawings}{self=titles-\userpagenumber}
+	\stoppositionoverlay
 \stoptexdefinition
 
 \definecolor[background][h=002b36]
@@ -84,9 +87,6 @@ StartPage;
 StopPage;
 \stopMPpositiongraphic
 
-\startpositionoverlay{page:background}
-    \setMPpositiongraphic{titles}{drawings}{self=titles}
-\stoppositionoverlay
 
 \defineoverlay [page:background][\positionoverlay{page:background}]
 \setupbackgrounds[page][background={page:background}]
