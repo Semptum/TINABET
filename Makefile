@@ -2,5 +2,5 @@ build:
 	context slides.tex
 
 clean:
-	rm *.aux *.bbl *.blg *.log *.tuc
+	$(RM) *.aux *.bbl *.blg *.log *.tuc
 
