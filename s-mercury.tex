@@ -19,6 +19,11 @@
 	footer=6mm
 ]
 
+\definelayout[titlepage][
+    header=6mm,
+    headerdistance=2mm
+]
+
 % Setting up the fonts
 \definefontfamily [presentation] [serif] [Palatino]
 \definefontfamily [presentation] [sans] [Diavlo] 
@@ -40,9 +45,9 @@
 
 
 \setupfooter[text][style=\tt\tfxx]
-\setupfootertexts[\setups{metadata}][\userpagenumber/\lastuserpage]
+\setupfootertexts[text][\setups{metadata}][]
 \startsetups metadata
-  \getvariable{metadata}{title}
+  \getvariable{metadata}{title} (\getvariable{metadata}{author})
 \stopsetups
 
 
@@ -84,6 +89,10 @@ StartPage;
 	path d ;
 	d:=((0,0) -- for i=1cm step 1cm until PaperWidth/2-w/2-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth/2-w/2,-0.5cm) -- (PaperWidth/2+w/2,-0.5cm) -- for i=PaperWidth/2+w/2+1cm step 1cm until PaperWidth-1cm : (i,-uniformdeviate(0.7cm)) -- endfor (PaperWidth,0)) shifted (0,PaperHeight-1cm);
 	drawpath d withcolor \MPcolor{title} withpen pencircle scaled 0.3mm;
+	picture pn;
+	pn := textext("\tt\tfx\userpagenumber/\lastuserpage");
+	numeric wn; wn = bbwidth(boundingbox pn);
+	draw pn shifted (PaperWidth-0.5cm-wn/2,0.5cm) withcolor \MPcolor{subtitle};
 StopPage;
 \stopMPpositiongraphic
 
@@ -93,7 +102,32 @@ StopPage;
 
 \setupcolors[state=start,textcolor=foreground] % Setting text color to a light yellow
 
-\define[1]\em{\bf\color[title]{#1}}
+\define[1]\em{{\bf\color[title]{#1}}}
+
+
+\setvariables
+    [metadata]
+    [
+      set={\setups{titlepage}},
+    ]
+
+\definestyle[titlestyle][style=\ss\tfc,color=title]
+
+\startsetups titlepage
+\setupbackgrounds[page] [background=color, backgroundcolor=background]
+\setuplayout[titlepage]
+  \startstandardmakeup[align=middle]
+    \titlestyle{\getvariable{metadata}{title}}
+    \blank[2*big]
+
+    \getvariable{metadata}{author}
+    \blank[big]
+
+    \getvariable{metadata}{date}
+  \stopstandardmakeup
+  \setuplayout[reset]
+\setupbackgrounds[page][background={page:background}]
+\stopsetups
 
 %\showframe
 \stopenvironment

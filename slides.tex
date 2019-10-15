@@ -1,20 +1,32 @@
 \environment s-mercury
 
+\setvariables[metadata][
+    title={My very first presentation written in \CONTEXT},
+    author={André Kalouguine},
+    date={\date},
+]
+
 \starttext
-\startslide[title={Hello}]
-\input knuth
+
+\startslide[title={First Slide}]
+    \input knuth
 \stopslide
 
-\startslide[title={Font examples}] [subtitle={Some subtitle}]
-\input ward
-Hello \em{world}
-\startformula
-\int_0^1 x^2=\frac 13
-\stopformula
+\startslide[title={Second, way more important slide}] [subtitle={with some math}]
+    \input ward
+    Hello \em{world}
+    \startformula
+        \int_0^1 x^2=\frac 13
+    \stopformula
 \stopslide
 
 \startslide[title={A very very very long and detailed title}] [subtitle={As well as an inexcusably long and annoying subtitle}]
-And some text
+    And some text
+    \startitemize[n]
+        \item Hello
+        \item World
+        \item And etc
+    \stopitemize
 \stopslide
 
 \stoptext
