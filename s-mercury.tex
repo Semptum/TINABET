@@ -112,15 +112,19 @@ StopPage;
     ]
 
 \definestyle[titlestyle][style=\ss\tfc,color=title]
+\definestyle[subtitlestyle][style=\ss\tfa,color=subtitle]
+\definestyle[authorstyle][style=\tf,color=foreground]
+
 
 \startsetups titlepage
 \setupbackgrounds[page] [background=color, backgroundcolor=background]
 \setuplayout[titlepage]
   \startstandardmakeup[align=middle]
     \titlestyle{\getvariable{metadata}{title}}
+    \blank[2*small]
+    \subtitlestyle{\getvariable{metadata}{subtitle}}
     \blank[2*big]
-
-    \getvariable{metadata}{author}
+    \authorstyle{\getvariable{metadata}{author}}
     \blank[big]
 
     \getvariable{metadata}{date}

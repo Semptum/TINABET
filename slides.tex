@@ -1,32 +1,43 @@
 \environment s-mercury
 
 \setvariables[metadata][
-    title={My very first presentation written in \CONTEXT},
+    title={A dark theme for quick presentations},
+    subtitle={Written in \CONTEXT},
     author={André Kalouguine},
     date={\date},
 ]
 
 \starttext
 
-\startslide[title={First Slide}]
-    \input knuth
+\startslide[title={Slide structure}][subtitle={A quick intro}]
+    A slide using this presentation inherits from the subsection head. 
+    
+    Thus a presentation can be organized using sections.
 \stopslide
 
-\startslide[title={Second, way more important slide}] [subtitle={with some math}]
-    \input ward
-    Hello \em{world}
+\startslide[title={Using features}] [subtitle={Math}]
+    This theme allows a user to use math as they would in any other \CONTEXT\ document.
+    
     \startformula
-        \int_0^1 x^2=\frac 13
+        \sum_{k=1}^{+\infty}\frac{1}{k^2}=\frac{\pi^2}{6}
     \stopformula
 \stopslide
 
-\startslide[title={A very very very long and detailed title}] [subtitle={As well as an inexcusably long and annoying subtitle}]
-    And some text
-    \startitemize[n]
-        \item Hello
-        \item World
-        \item And etc
-    \stopitemize
+\startslide[title={Using features}] [subtitle={A list of the main bodyfont components}]
+    \showbodyfont
 \stopslide
+
+\startslide[title={Using features}] [subtitle={Showing images and graphs}]
+    Seeing as the presentation employs a dark color scheme, adapting the images to the background is a task which rests solely on the shoulders of the end user. An example of a nicely integrated picture.
+\stopslide
+
+\startslide[title={Using features}] [subtitle={Step by step presentations}]
+    \externalfigure[image.pdf][width=15cm]
+\stopslide
+
+\startslide[title={Closing remarks}] [subtitle={Printing a bibliography}]
+    Printing a bibliography is important at the end of academic talks.
+\stopslide
+
 
 \stoptext
